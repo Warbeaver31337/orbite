@@ -23,6 +23,7 @@ impl Data {
 
         let mut positions = Vec::new();
         let mut speeds = Vec::new();
+        let mut energy = Vec::new();
 
         for i in 0..tree.nb_save {
             positions.push([
