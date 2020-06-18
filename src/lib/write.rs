@@ -6,9 +6,10 @@ pub struct Data {
     pub c: usize,
     pub positions: Vec<[f64; 3]>,
     pub speeds: Vec<[f64; 3]>,
+    pub energy: Vec<[f64; 2]>, // particle's energy [kinetic, potential]
     pub rayons: [f64; 3],
     pub inertia_matrix: [f64; 9],
-    pub energy: f64,
+    pub total_energy: f64, // system energy
     pub virial: f64,
     pub dynamical_time: f64,
     pub espilon: f64,
@@ -34,16 +35,22 @@ impl Data {
                 tree.particules[i].speed[0],
                 tree.particules[i].speed[1],
                 tree.particules[i].speed[2],
-            ])
+            ]);
+
+            energy.push([
+                tree.particules[i].cinetic,
+                tree.particules[i].mass * tree.particules[i].potential,
+            ]);
         }
         Data {
             t,
             c,
             positions,
             speeds,
+            energy,
             rayons: tree.rayons,
             inertia_matrix: tree.inertia_matrix,
-            energy: tree.energy,
+            total_energy: tree.energy,
             virial: tree.virial,
             dynamical_time: tree.dynamical_time,
             espilon: tree.epsilon,
@@ -58,9 +65,10 @@ impl Data {
             c: 0usize,
             positions: Vec::new(),
             speeds: Vec::new(),
+            energy: Vec::new(),
             rayons: [0f64; 3],
             inertia_matrix: [0f64; 9],
-            energy: 0f64,
+            total_energy: 0f64,
             virial: 0f64,
             dynamical_time: 0f64,
             espilon: 0f64,
